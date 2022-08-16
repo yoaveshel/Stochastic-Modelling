@@ -1,0 +1,86 @@
+% no need for usepackage, document class or begin document in this file
+The problem of software reliability lies precisely in the fact that the number of bugs is unknown. For if it was, testing would just continue until all the bugs are fixed and the software could be bug free and 100\% reliable. Therefore this section uses the method of Maximum Likelihood Estimators (MLE) to estimate the value of the parameters in our model, namely $u$ and $\beta$. To that end, we start with finding an expression for the probability of observing $m_e$ failures up to some time $t_e$.
+
+It is given that $m_e$ bugs were discovered in the testing period $(0, t_e]$, let the recorded time of their detection be $t_1,t_2,..,t_e$. The number of bugs $m_e$ can be seen as the greatest integer such that $t_e \leq t_{m_e}$ and $t_{m_{e}+1} > t_e$. Thus, the probability of observing $m_e$ w.r.t $t_i$ is therefore 
+\begin{equation}\label{eq:joint-prob-disc}
+    \p(T_1 = t_1, T_2 = t_2 ,...,T_{m_e}=t_{m_e}, T_{m_{e+1}} > t_e).
+\end{equation}
+with $T_i$ be the random variable of the time the $i^{th}$ bug was detected. 
+Because of the continuous nature of $T_i$, we will assume that the time of bug detection $T_i$ is in an interval ($t_i -\Delta/2, t_i + \Delta/2$) for small and positive $\Delta t$, instead of a single point in time. Thus (\ref{eq:joint-prob-disc}) becomes 
+\begin{align*}
+    \p(T_1 \in (t_1 -\Delta t/2, t_1 + \Delta t/2) , T_2 \in (t_2 -\Delta t/2, t_2 + \Delta t/2) ,...,\\T_{m_e} \in (t_i -\Delta t/2, t_i + \Delta t/2),
+    T_{m_{e+1}} > t_e).
+\end{align*}
+Using the assumption that during each interval ($t_i -\Delta t/2, t_i + \Delta t/2$) only one bug occurs, we can transform the above probability into 
+
+\begin{align*}
+        \p(M_1 = 1 , M_2 = 1 ,...,M_{m_e} = 1, u - M(t_e) = u - m_e)
+\end{align*}
+with $M_i$ denoting the number of bugs found in the interval ($t_i -\Delta/2, t_i + \Delta/2$) and $M(t_i)$ the number of bugs detected up to and including $t_i$. Evidently, this is the multinomial distribution with probability vector
+
+\begin{align*}
+(F(t_1 + \Delta t/2) - F(t_1 - \Delta t/2), F(t_2 + \Delta t/2) - F(t_2 - \Delta t/2),...,\\F(t_{m_e} + \Delta t/2) - F(t_{m_e} - \Delta t/2))
+\end{align*}
+which can be shortened to 
+$$
+(F_1, F_2,..,F_{m_e}, 1 - F(t_e)). 
+$$
+
+It can therefore be easily deduced, using the fact that the time of detection is recorded and the distribution of $(M_1 = 1 , M_2 = 1 ,...,M_{m_e} = 1, u - M(t_e) = u - m_e)$ is multinomial that
+\begin{equation}\label{eq:prob-before-approx}
+\begin{aligned}
+    \p(T_1 \in (t_1 - \frac{1}{2}\Delta t, t_1 + \frac{1}{2}\Delta t], &T_2 \in (t_2 - \frac{1}{2}\Delta t, t_2 + \frac{1}{2}\Delta t],...,\\&T_{m_e} \in (t_{m_e} - \frac{1}{2}\Delta t, t_{m_e} + \frac{1}{2}\Delta t],T_{m_e + 1} > t_e) 
+    \\&= \p(M_1 = 1 , M_2 = 1 ,...,M_{m_e} = 1, u - M(t_e) = u - m_e)\\[10pt]
+    &= {u\choose 1,\dots,1,u-m_e}F_1^1F_2^1...F_{m_e}^1[1-F(t_e))]^{u-m_e}\\[10pt]
+\end{aligned}
+\end{equation}
+
+Note that this is a rather cumbersome expression and thus, it would be beneficial to simplify and approximate it. Recall that 
+$$
+F_i = F(t_1 + \Delta t/2) - F(t_1 - \Delta t/2) = \p(T_i \in (t_1 - \Delta t/2, t_1 + \Delta t/2)) = \int_{t_1 - \Delta t/2}^{t_1 + \Delta t/2} f(s) ds,
+$$ 
+so $F_i\approx \Delta t f(t_i)$ and (\ref{eq:prob-before-approx}) now become 
+\begin{equation}\label{eq:prob-after-approx}
+\begin{aligned}
+    &\frac{u!}{(u - m_e)!}f(t_1)\Delta t f(t_2)\Delta t ... f(t_e)\Delta t \big(1 - F(t_e)\big)^{u-m_e}\\[10pt]
+    &= \prod_{i=1}^{m_e}\big((u-i + 1)f(t_i)\Delta t\big) \cdot \big(1 - F(t_e)\big)^{u-m_e}.
+\end{aligned}
+\end{equation}
+
+As in the previous section, it is assumed that the detection time per bug is exponentially distributed with $F(t) = F_{\beta}(t) = 1 - e^{-\beta t}$ and consequently, $f(t) = \frac{d}{dt} F_{\beta}(t) =  \beta e^{-\beta t}.$ Equipped with a density function and (potentially) known data, one would naturally want to estimate the function's parameters. Then Equation \ref{eq:prob-after-approx} viewed as a function of $u$ and $\beta$ is likelihood function. For simplicity, we can divide (\ref{eq:prob-after-approx}) by $\Delta t^{m_e}$ since under differentiation, said term disappears. Thus
+\begin{align*}
+    \mathcal{L}(u,\beta\mid m_e)&=\prod_{i=1}^{m_e}\big((u-i + 1)f_{\beta}(t_i)\big) \cdot \big(1 - F_{\beta}(t_e)\big)^{u-m_e}\\    
+    & = \prod_{i=1}^{m_e}\big((u-i + 1)\beta e^{\beta t_i}\big) \cdot \left(e^{-\beta t_e}\right)^{u-m_e}.
+\end{align*}
+Then the log-likelihood is
+\begin{align*}
+    \ell(u,\beta) &= \log{\mathcal{L}(u,\beta)}\\
+    &= \sum_{i=1}^{m_e} \log{(u-i+1)} + m_e \log{(\beta)} - \beta \sum_{i=1}^{m_e}t_i - \beta t_e(u-m_e).
+\end{align*}
+Under differentiation w.r.t $\beta$, we have 
+\begin{equation*}
+    \frac{d}{d\beta} \ln{L(u,\beta)}= \frac{m_e}{\beta} - \sum_{i=1}^{m_e}t_i - t_e(u-m_e), 
+\end{equation*}
+setting it to 0 to obtain an estimator for $\beta$
+\begin{equation*}
+    \hat{\beta} = \frac{m_e}{\sum_{i=1}^{m_e} t_i + t_e(\hat{u} - m_e)}.
+\end{equation*}
+Similarly, one can easily find the estimator for $u$ as the solution of 
+\begin{equation}\label{eq:u_est}
+    \begin{aligned}
+        \sum_{i=1}^{m_e}\frac{1}{\hat{u} - i + 1} &= \hat{\beta} t_e\\
+        &= \frac{m_e t_e}{\sum_{i=1}^{m_e} t_i + t_e(\hat{u} - m_e)} \text{  (Substituting in the estimator $\hat{\beta}$)}
+    \end{aligned}
+\end{equation}
+Equation (\ref{eq:u_est}) is solved numerically using Mathematica in Appendix \ref{code}. 
+
+To test the theories derived thus far, the code given in Appendix \ref{code} was ran on the table of data in Appendix \ref{table-failure} which resulted in the following estimators: 
+\begin{align*}
+    &\hat{u}=141.007\\
+    &\hat{\beta}=0.0000355835. 
+\end{align*} \\ 
+Using the above values and Equation (\ref{eq:remaining-time}) we can then find the maximum likelihood estimator for the remaining time before the software meets the reliability requirements set by the management. By simply substituting the appropriate values, we find that
+$$
+\Tilde{t} = 103,161 \text{ CPU seconds}
+$$
+or about 29 CPU hours. 

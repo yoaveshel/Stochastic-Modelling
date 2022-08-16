@@ -1,0 +1,58 @@
+\ProvidesPackage{preamble}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\usepackage{mathtools}
+\usepackage{biblatex}
+\usepackage{tikz}
+\usepackage{graphics, setspace}
+\usepackage{listings}
+\usepackage{lipsum}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor=black,
+    filecolor=black,
+    linkcolor=black,
+    urlcolor=black
+}
+
+\addbibresource{ref.bib}
+
+\DeclareMathAlphabet{\pazocal}{OMS}{zplm}{m}{n}
+\DeclareMathOperator{\Ima}{Im}
+\newcommand{\Ba}{\mathcal{B}}
+\newcommand{\Ta}{\mathcal{T}}
+\newcommand{\Aa}{\mathcal{A}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\p}{\mathbb{P}}
+\newcommand{\Ss}{\mathcal{S}} % Schwartz space
+\newcommand{\F}{\mathcal{F}} % Fourier Transform
+\newcommand{\Rf}{\mathcal{R}} % reflection
+\newcommand{\E}{\mathbb{E}}
+
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}%
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}%
+% Swap the definition of \abs* and \norm*, so that \abs
+% and \norm resizes the size of the brackets, and the 
+% starred version does not.
+\makeatletter
+\let\oldabs\abs
+\def\abs{\@ifstar{\oldabs}{\oldabs*}}
+%
+\let\oldnorm\norm
+\def\norm{\@ifstar{\oldnorm}{\oldnorm*}}
+\makeatother
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+
+\title{Stochastic Modelling: Software Reliability}
+\author{Y. Eshel, A.V. Giang, N. Toon}
+\date{Course: XB\_0027\\
+    January 2021}

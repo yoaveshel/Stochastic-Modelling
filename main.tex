@@ -1,0 +1,28 @@
+\documentclass{article}
+\usepackage{preamble} % Change title, authors and packages in preamble.sty
+
+\begin{document}
+\maketitle
+\begin{abstract}
+This report estimates the time before a statistics package developed by MathWorks is ready for release. For this purpose statistical tools such as Maximum Likelihood Estimators and multinomial random variables are used.
+
+This reports consists of three parts: (1) developing the model,  (2) estimating the model parameters and (3) calculating the time before the software ready for release. 
+\end{abstract}
+\newpage
+\tableofcontents
+
+\section{Introduction}
+\input{sections/intro}
+\section{Constructing the model}\label{sec:2}
+\input{sections/sec2}
+\section{Estimating the parameters}\label{sec:estimators}
+\input{sections/sec3}
+\section{How long before release?}\label{sec:results}
+\input{sections/sec4}
+\section{Conclusion}
+\input{sections/conclusion}
+
+\newpage
+\appendix
+\input{sections/appendices}
+\end{document}

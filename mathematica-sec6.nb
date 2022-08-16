@@ -1,0 +1,156 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[      4965,        146]
+NotebookOptionsPosition[      4601,        132]
+NotebookOutlinePosition[      5011,        148]
+CellTagsIndexPosition[      4968,        145]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[BoxData[{
+ RowBox[{"Clear", "[", 
+  RowBox[{
+  "t", ",", " ", "u", ",", " ", "i", ",", " ", "\[Beta]", ",", " ", "m", ",", 
+   " ", "tt"}], "]"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Subscript", "[", 
+   RowBox[{"t", ",", " ", "e"}], "]"}], "=."}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Subscript", "[", 
+   RowBox[{"m", ",", " ", "e"}], "]"}], " ", "=."}], "\[IndentingNewLine]", 
+ RowBox[{"t", " ", "=", 
+  RowBox[{"Drop", "[", 
+   RowBox[{
+    RowBox[{"Flatten", "[", " ", 
+     RowBox[{"SemanticImport", "[", 
+      RowBox[{
+      "\"\<C:\\\\Users\\\\yoave\\\\Google Drive\\\\Studies\\\\Math\\\\Year \
+2\\\\Period 3\\\\05 - Mathematical Modeling of Stochastic \
+Systems\\\\failure-times.csv\>\"", ",", " ", "Automatic", ",", " ", 
+       "\"\<Columns\>\""}], "]"}], "]"}], ",", " ", 
+    RowBox[{"-", "2"}]}], "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  SubscriptBox["t", "e"], " ", "=", " ", "91208"}], "\[IndentingNewLine]", 
+ RowBox[{
+  SubscriptBox["m", "e"], " ", "=", " ", 
+  RowBox[{"Length", "[", "t", "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"dt", " ", "=", " ", "14400"}], "\[IndentingNewLine]", 
+ RowBox[{"sol", " ", "=", " ", 
+  RowBox[{"NSolve", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{
+      RowBox[{"Sum", "[", 
+       RowBox[{
+        RowBox[{"1", "/", 
+         RowBox[{"(", 
+          RowBox[{"u", "-", "i", "+", "1"}], ")"}]}], ",", 
+        RowBox[{"{", 
+         RowBox[{"i", ",", " ", "1", ",", " ", 
+          SubscriptBox["m", "e"]}], "}"}]}], "]"}], "\[Equal]", " ", 
+      RowBox[{
+       SubscriptBox["m", "e"], " ", 
+       RowBox[{
+        SubscriptBox["t", "e"], "/", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"Sum", "[", 
+           RowBox[{
+            RowBox[{"t", "[", 
+             RowBox[{"[", "i", "]"}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"i", ",", " ", "1", ",", " ", 
+              SubscriptBox["m", "e"]}], "}"}]}], "]"}], "+", 
+          RowBox[{
+           SubscriptBox["t", "e"], 
+           RowBox[{"(", 
+            RowBox[{"u", "-", 
+             SubscriptBox["m", "e"]}], ")"}]}]}], ")"}]}]}]}], "&&", " ", 
+     RowBox[{"u", "\[GreaterEqual]", " ", 
+      SubscriptBox["m", "e"]}]}], ",", " ", "u", ",", " ", "Reals"}], 
+   "]"}]}], "\[IndentingNewLine]", 
+ RowBox[{"u", " ", "=", " ", 
+  RowBox[{"u", "/.", 
+   RowBox[{"sol", "[", 
+    RowBox[{"[", "1", "]"}], "]"}]}]}], "\[IndentingNewLine]", 
+ RowBox[{"\[Beta]", "=", " ", 
+  RowBox[{
+   SubscriptBox["m", "e"], "/", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"Sum", "[", 
+      RowBox[{
+       RowBox[{"t", "[", 
+        RowBox[{"[", "i", "]"}], "]"}], ",", " ", 
+       RowBox[{"{", 
+        RowBox[{"i", ",", " ", "1", ",", " ", 
+         SubscriptBox["m", "e"]}], "}"}]}], "]"}], "+", 
+     RowBox[{
+      SubscriptBox["t", "e"], 
+      RowBox[{"(", 
+       RowBox[{"u", "-", 
+        SubscriptBox["m", "e"]}], ")"}]}]}], ")"}]}]}], "\[IndentingNewLine]", 
+ RowBox[{"tt", " ", "=", " ", 
+  RowBox[{
+   RowBox[{"-", 
+    RowBox[{"(", 
+     RowBox[{"Log", "[", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"1", "-", 
+         RowBox[{"0.95", "^", 
+          RowBox[{"(", 
+           RowBox[{"1", "/", 
+            RowBox[{"(", 
+             RowBox[{"u", "-", 
+              SubscriptBox["m", "e"]}], ")"}]}], ")"}]}]}], ")"}], "/", 
+       RowBox[{"(", 
+        RowBox[{"1", "-", 
+         RowBox[{"Exp", "[", 
+          RowBox[{
+           RowBox[{"-", "\[Beta]"}], " ", "dt"}], "]"}]}], ")"}]}], "]"}], 
+     ")"}]}], "/", "\[Beta]"}]}]}], "Input",
+ CellChangeTimes->{{3.8196279535895505`*^9, 3.819627954797552*^9}, {
+   3.8196279887846403`*^9, 3.819628038637374*^9}, {3.819628170816101*^9, 
+   3.819628205123992*^9}, {3.8196291213348913`*^9, 3.81962913102157*^9}, 
+   3.819629190816554*^9, {3.819629222495953*^9, 3.8196292232192354`*^9}, {
+   3.8196292680895944`*^9, 3.819629270521044*^9}, {3.8196293956545677`*^9, 
+   3.8196295495484915`*^9}, 3.819629657798574*^9},
+ CellLabel->
+  "In[156]:=",ExpressionUUID->"6d7213a5-5894-4721-93a8-d9986c0929b7"]
+},
+WindowSize->{568.5, 507.75},
+WindowMargins->{{102.75, Automatic}, {Automatic, 95.25}},
+FrontEndVersion->"12.1 for Microsoft Windows (64-bit) (June 19, 2020)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"843b3a7e-89f5-401e-a2b5-48666377f76e"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[558, 20, 4039, 110, 385, "Input",ExpressionUUID->"6d7213a5-5894-4721-93a8-d9986c0929b7"]
+}
+]
+*)
+
+(* End of internal cache information *)
+

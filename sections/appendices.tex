@@ -1,0 +1,96 @@
+\section{Table of failure times}
+\label{table-failure}
+\begin{center}
+    \begin{tabular}{|c|c|c|c|c|c|}
+    \hline
+ 3 & 2676 & 7843 & 16185 & 35338 & 53443 \\
+ \hline
+ 33 & 3098 & 7922 & 16229 & 36799 & 54433 \\
+ \hline
+ 146 & 3278 & 8738 & 16358 & 37642 & 55381 \\
+ \hline
+ 227 & 3288 & 10089 & 17168 & 37654 & 56463 \\
+ \hline
+ 342 & 4434 & 10237 & 17458 & 37915 & 56485 \\
+ \hline
+ 351 & 5034 & 10258 & 17758 & 39715 & 56560 \\
+ \hline
+ 353 & 5049 & 10491 & 18287 & 40580 & 57042 \\
+ \hline
+ 444 & 5085 & 10625 & 18568 & 42015 & 62551 \\
+ \hline
+ 556 & 5089 & 10982 & 18728 & 42045 & 62651 \\
+ \hline
+ 571 & 5090 & 11175 & 19556 & 42188 & 62661 \\
+ \hline
+ 709 & 5097 & 11411 & 20567 & 42296 & 63732 \\
+ \hline
+ 759 & 5324 & 11442 & 21012 & 42306 & 64103 \\
+ \hline
+ 836 & 5389 & 11811 & 21308 & 45406 & 64893 \\
+ \hline
+ 860 & 5565 & 12549 & 23063 & 46653 & 71043 \\
+ \hline
+ 968 & 5623 & 12559 & 24127 & 47596 & 74364 \\
+ \hline
+ 1056 & 6080 & 12791 & 25910 & 48296 & 75409 \\
+ \hline
+ 1726 & 6380 & 13121 & 26770 & 49171 & 76057 \\
+ \hline
+ 1846 & 6477 & 13486 & 27753 & 49416 & 81542 \\
+ \hline
+ 1872 & 6740 & 14708 & 28460 & 50145 & 82702 \\
+ \hline
+ 1986 & 7192 & 15251 & 28493 & 52042 & 84566 \\
+ \hline
+ 2311 & 7447 & 15261 & 29361 & 52489 & 88682 \\
+ \hline
+ 2366 & 7644 & 15277 & 30085 & 52875 & --- \\
+ \hline
+ 2608 & 7837 & 15806 & 32408 & 53321 & --- \\
+ \hline
+\end{tabular}
+\end{center}'
+
+\section{Mathematica code}\label{code}
+    \begin{doublespace}
+        \noindent\(\pmb{\text{Clear}[t, u, i, \beta , m, \text{tt}, \mu ,v, \text{vt}, \text{vr}, \text{vc}]}\\
+        \pmb{\text{Subscript}[t, e]\text{=.}}\\
+        \pmb{\text{Subscript}[m, e] \text{=.}}\\
+        \pmb{F[\text{t$\_$}]= 1-\text{Exp}[-\beta  t]}\\
+        \pmb{f[\text{t$\_$}] = F'[t]}\\
+        \pmb{\mu [\text{t$\_$}] = \text{Integrate}\left[\left(u-m_e\right)f[\text{te}+s]/(1-F[\text{te}]), \{s, 0, t\}\right]}\\
+        \pmb{\text{vt}[\text{t$\_$}] = 1.25t +0.75 \mu [t]}\\
+        \pmb{\text{vr}[\text{t$\_$}] = 3 \mu [t]}\\
+        \pmb{\text{vc}[\text{t$\_$}] = 1.5 t + 0.125 \mu [t]}\\
+        \pmb{\text{dvt}[\text{t$\_$}]=\text{vt}'[t]}\\
+        \pmb{\text{dvr}[\text{t$\_$}]=\text{vr}'[t]}\\
+        \pmb{\text{dvc}[\text{t$\_$}]=\text{vc}'[t]}\)
+    \end{doublespace}
+    
+    \begin{doublespace}
+        \noindent\(\pmb{t =}\\
+        \pmb{\text{Drop}[}\\
+        \pmb{\text{Flatten}[ }\\
+        \pmb{\text{SemanticImport}[}
+        \pmb{\text{{``}failure-times.csv{''}}, }
+        \pmb{\text{Automatic}, \text{{``}Columns{''}}]], -2]}\\
+        \pmb{\text{te} = 91208}\\
+        \pmb{m_e = \text{Length}[t]}\\
+        \pmb{\text{dt} = 14400}\\
+        \pmb{\text{sol} = \text{NSolve}[\text{Sum}\left[1/(u-i+1),\left\{i, 1, m_e\right\}\right]== m_e \text{te}\left/\left(\text{Sum}\left[t[[i]],\left\{i,
+        1, m_e\right\}\right]+\text{te}\left(u-m_e\right)\right)\right}\\
+        \pmb{\&\& u\geq  m_e, u, \text{Reals}]}\\
+        \pmb{u = u\text{/.}\text{sol}[[1]]}\\
+        \pmb{\beta = m_e/\left(\text{Sum}\left[t[[i]], \left\{i, 1, m_e\right\}\right]+\text{te}\left(u-m_e\right)\right)}\\
+        \pmb{\text{tt} = \left.-\left(\text{Log}\left[\left.\left(1-0.95{}^{\wedge}\left(1\left/\left(u-m_e\right)\right.\right)\right)\right/(1-\text{Exp}[-\beta
+         \text{dt}])\right]\right)\right/\beta }\)
+    \end{doublespace}
+    
+    \begin{doublespace}
+        \noindent\(\pmb{\text{Clear}[t]}\\
+        \pmb{\beta =\beta /3600}\\
+        \pmb{d[\text{t$\_$}] = \text{Max}[\text{vt}'[t],\text{vr}'[t], \text{vc}'[t]]}\\
+        \pmb{v[\text{t$\_$}] = \text{Integrate}[d[s], \{s, 0, t\}]}\\
+        \pmb{v[\text{tt}/3600]}\)
+    \end{doublespace}
